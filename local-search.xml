@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>搭建个人博客</title>
+    <link href="/2022/02/25/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <url>/2022/02/25/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    
+    <content type="html"><![CDATA[<p>其实早在很久之前看见别人搭建了漂亮的博客就很心动，但是自己其实一直没有输出的习惯，所以也从来没有研究过如何搭建博客。直到最近反复看到很多公众号都在说程序猿有必要总结知识，而且最近也不是很忙，所以打算动手实现以下。以后上传的内容基本属于是自己的生活内容以及知识内容的总结。</p><p>简而言之，利用GitHub+Hexo搭建博客，并没有自己想的那么难。域名也不是必须的（如果你对域名有着一种强迫症，当我没说）但其实买域名也还好，不选择那种顶级域名其实很便宜，几块钱到几十块不等。话不多说，现在就开始记录，我是如何一步一步搭建起来的博客。</p><h2 id="Start-Your-Own-Blog"><a href="#Start-Your-Own-Blog" class="headerlink" title="Start Your Own Blog"></a>Start Your Own Blog</h2><h3 id="一-准备工作"><a href="#一-准备工作" class="headerlink" title="一. 准备工作"></a>一. 准备工作</h3><ol><li><a href="https://cloud.tencent.com/developer/article/1487508">Github账号和Git的下载</a>。因为我们要把网页以及代码这些东西部署到Github，所以这两个套件必不可少。</li><li><a href="https://blog.csdn.net/Small_Yogurt/article/details/104968169">NodeJs下载</a>，我们使用Hexo进行开发，它是基于<code>NodeJS</code>的静态博客网站生成器，所以也需要下载NodeJs。</li></ol><p>按照上述两个步骤完成就好了，其中博客后面说的修改cache和global不是必须的。</p><h3 id="二-创建仓库"><a href="#二-创建仓库" class="headerlink" title="二. 创建仓库"></a>二. 创建仓库</h3><p>我们会把构建的网页部署到<code>Github</code>，所以我们需要在<code>Github</code>上创立一个仓库来存放</p><p>创建一个名为<code>&lt;用户名&gt;.github.io</code>的仓库，创建过程就不赘述了。</p><h3 id="三-安装Hexo"><a href="#三-安装Hexo" class="headerlink" title="三. 安装Hexo"></a>三. 安装Hexo</h3><p>我们采用<code>Hexo</code>来创建我们的博客网站，<code>Hexo</code> 是一个基于<code>NodeJS</code>的静态博客网站生成器</p><ul><li><p>安装Hexo</p>  <figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">npm install -g hexo-cli<br>hexo -v <span class="hljs-comment">#安装好后通过这个命令查看版本</span><br></code></pre></td></tr></table></figure></li><li><p>创建一个MyBlog项目并且初始化</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo init MyBlog<br><span class="hljs-built_in">cd</span> MyBlog<br>npm install<br></code></pre></td></tr></table></figure></li><li><p><strong>本地</strong>启动</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo g<br>hexo s<br></code></pre></td></tr></table></figure></li></ul><p>​    open给出的链接就可以看到页面默认的主题风格，不太好看，就是说，所以接下来就是更换主题</p><img src="/2022/02/25/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/HexoInitial.png" class=""><h3 id="四-更换主题"><a href="#四-更换主题" class="headerlink" title="四. 更换主题"></a>四. 更换主题</h3><p>我是用的是Fluid主题，我感觉比Next主题好看。至于安装主题的过程都差不多，所以我以Fliud主题为例子</p><ul><li><p>安装主题</p><p>  从Github上下载<a href="https://github.com/fluid-dev/hexo-theme-fluid">Fluid</a>到themes目录，并且把解压出来的文件重命名为fluid（git clone也可以）</p></li><li><p>指定主题</p><p>  位于MyBlog根目录文件夹下有个名为<code>_config.yml</code>的文件，我么打开进行如下修改(ctr+f定位)</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">theme: fluid    <span class="hljs-comment"># 指定主题</span><br>language: zh-CN  <span class="hljs-comment"># 指定语言</span><br></code></pre></td></tr></table></figure></li><li><p>创建「关于页」</p><p>  首次使用主题的「关于页」需要手动创建：</p>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new page about<br></code></pre></td></tr></table></figure><p>  编辑博客目录下 <code>/source/about/index.md</code>，添加 <code>layout</code> 属性</p>  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">about</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020-02-23 19:20:33</span><br><span class="hljs-attr">layout:</span> <span class="hljs-string">about</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><p>  采取上述类似的方法本地启动就能发现有新的主题页了。</p></li></ul><h3 id="五-个性化设置"><a href="#五-个性化设置" class="headerlink" title="五. 个性化设置"></a>五. 个性化设置</h3><h4 id="从根-config-yml修改"><a href="#从根-config-yml修改" class="headerlink" title="从根_config.yml修改_"></a>从根_<code>config.yml</code>修改_</h4><ul><li><p>tab页的名称</p></li><li><img src="/2022/02/25/%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/tab.png" class=""></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>tech</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>搭建博客</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>testArticle</title>
     <link href="/2022/02/24/testArticle/"/>
     <url>/2022/02/24/testArticle/</url>
