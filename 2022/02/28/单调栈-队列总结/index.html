@@ -24,7 +24,7 @@
 <meta property="og:description" content="最近在Leetcode上刷了不少关于单调栈&#x2F;队列的题目，但是总感觉没有掌握到关于单调栈&#x2F;队列的精髓，所以打算进行总结一下它们俩到底是什么，性质是如何，如何使用？ 单调栈&#x2F;队列联系和区别首先，默认大家都知道栈和队列是什么数据结构；其次，声明队列指的是双端队列(deque) 共同点：顾名思义，单调是他们俩最大的共同点，他们都保持从栈底（队首）到栈顶（队尾）元素依次递增&#x2F;递减的性质。 不同点：显然，最大">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-28T02:54:24.000Z">
-<meta property="article:modified_time" content="2022-03-01T03:32:46.117Z">
+<meta property="article:modified_time" content="2022-03-04T07:39:46.699Z">
 <meta property="article:author" content="Hourun Li">
 <meta property="article:tag" content="单调栈&#x2F;队列">
 <meta name="twitter:card" content="summary_large_image">
@@ -197,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.7k 字
+      4.3k 字
     </span>
   
 
@@ -206,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      23 分钟
+      36 分钟
     </span>
   
 
@@ -263,10 +263,18 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">constrainedSubsetSum</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>&#123;<br>    <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-type">int</span>* p = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span>[n];<br>    <span class="hljs-type">int</span> ret = nums[<span class="hljs-number">0</span>];<br>    p[<span class="hljs-number">0</span>] = nums[<span class="hljs-number">0</span>];<br>    deque&lt;<span class="hljs-type">int</span>&gt; q;<br>    q.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;<br>      <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>() &amp;&amp; q.<span class="hljs-built_in">front</span>() &lt; i-k) &#123;<br>        q.<span class="hljs-built_in">pop_front</span>();<br>      &#125;<br>      p[i] = <span class="hljs-built_in">max</span>(nums[i], nums[i] + p[q.<span class="hljs-built_in">front</span>()]);<br>      <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>() &amp;&amp; p[q.<span class="hljs-built_in">back</span>()] &lt;= p[i]) &#123;<br>        q.<span class="hljs-built_in">pop_back</span>();<br>      &#125;<br>      q.<span class="hljs-built_in">push_back</span>(i);<br>      ret = <span class="hljs-built_in">max</span>(ret, p[i]);<br>    &#125;<br>    <span class="hljs-keyword">return</span> ret;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<h4 id="维护完整数组的单调性质，用单调栈"><a href="#维护完整数组的单调性质，用单调栈" class="headerlink" title="维护完整数组的单调性质，用单调栈"></a>维护完整数组的单调性质，用单调栈</h4><ul>
+<h4 id="维护整个数组的单调性质，用单调栈"><a href="#维护整个数组的单调性质，用单调栈" class="headerlink" title="维护整个数组的单调性质，用单调栈"></a>维护整个数组的单调性质，用单调栈</h4><ul>
+<li><p>简单利用上述性质</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/shortest-unsorted-continuous-subarray/">最短无序连续子数组</a></p>
+<p>  这道题做出来并不困难，但是是体现单调栈用法的很好的一道题目。我们要寻找到最短的无序连续子数组，那么也就是说这个无序数组的左边元素都比无序数组中的所有元素小，这个无序数组右边的元素都比无序数组中的所有元素大。那么从左往右向单调增栈添加元素，被弹出的元素最小索引就是无序数组的左边界；从右往左向单调减栈添加元素，被弹出的元素最大索引就是无序数组的右边界。这是最直观的做法，但是时间空间复杂度都是O(n)，都不算优秀。</p>
+<p>  还有优化空间为O(1)的方法，是基于数组性质的运用。我个人觉得不算很好想，需要多刷题才能有灵感，所以就不讲了，感兴趣的读者直接看leetcode题解吧。</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 单调栈解法</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">findUnsortedSubarray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>    stack&lt;<span class="hljs-type">int</span>&gt; sta;<br>    <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-type">int</span> l = n, r = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)&#123;<br>      <span class="hljs-keyword">while</span>(!sta.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[i] &lt; nums[sta.<span class="hljs-built_in">top</span>()]) &#123;<br>        l = <span class="hljs-built_in">min</span>(l, sta.<span class="hljs-built_in">top</span>());<br>        sta.<span class="hljs-built_in">pop</span>();<br>      &#125;<br>      sta.<span class="hljs-built_in">push</span>(i);<br>    &#125;<br>    sta = <span class="hljs-built_in">stack</span>&lt;<span class="hljs-type">int</span>&gt;();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = n<span class="hljs-number">-1</span>; i &gt;=<span class="hljs-number">0</span>; i--)&#123;<br>      <span class="hljs-keyword">while</span>(!sta.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[i] &gt; nums[sta.<span class="hljs-built_in">top</span>()]) &#123;<br>        r = <span class="hljs-built_in">max</span>(r, sta.<span class="hljs-built_in">top</span>());<br>        sta.<span class="hljs-built_in">pop</span>();<br>      &#125;<br>      sta.<span class="hljs-built_in">push</span>(i);<br>    &#125;<br>    <span class="hljs-keyword">return</span> (r-l) &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : r - l + <span class="hljs-number">1</span>;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
 <li><p>非严格单调的单调栈</p>
-<p>  维护完整数组的单调性质，仅仅使用这一条性质就太过于简单了。所以实际题目中往往会出现变法，会添加一些限制条件。比如单调栈<code>pop</code>的总次数有一定限制，可以<code>pop</code>的对象必须是特定的。这也导致了<strong>整体来看这个栈并不是单调的，但是我们仍然采用了单调栈的思想</strong>，这就所谓是形变神不变。</p>
-<p>  这类题目多用于<strong>求解字典序最小</strong>，下面来看两个例题。</p>
+<p>维护完整数组的单调性质，仅仅使用这一条性质就太过于简单了。所以实际题目中往往会出现变法，会添加一些限制条件。比如单调栈<code>pop</code>的总次数有一定限制，可以<code>pop</code>的对象必须是特定的。这也导致了<strong>整体来看这个栈并不是单调的，但是我们仍然采用了单调栈的思想</strong>，这就所谓是形变神不变。</p>
+<p>这类题目多用于<strong>求解字典序最小</strong>，下面来看两个例题。</p>
 <ul>
 <li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/remove-duplicate-letters/">去除重复字母</a>(只能pop特定元素)</p>
 <p>  该题就是只能<code>pop</code>特定的对象。这题首先应该想到的很可能是贪心，如果对单调栈比较熟的朋友可能会先想到单调栈。我最开始做的时候大体方向是对的（单调栈和贪心），但是一些细节没有搞清楚，<strong>不知道什么时候该入栈，什么时候该出栈</strong>（这也是可能还没学到家的原因，知道要用，但不知道具体怎么用）。我认为这种问题只有多考练习以及仔细分析。由于这道题是采用贪心的方法，其实大家可能都会有直觉该怎么做，但是一些细节部分我们<strong>尽量采用分类讨论的思想</strong>来进行分析，这有利于帮助我们厘清上述问题。</p>
@@ -283,12 +291,15 @@
 </ul>
 </li>
 </ul>
-<h4 id="应用1："><a href="#应用1：" class="headerlink" title="应用1："></a>应用1：</h4><p>以<code>O(n)</code>的时间复杂度，在一维数组中<strong>对每一个数找到其左/右边第一个比自己大/小的元素</strong>。</p>
-<p><strong>关键词</strong>：一位数组，<strong>仅限</strong>左/右边的<strong>第一个</strong>。此情况使用<strong>单调栈</strong></p>
-<h4 id="应用2："><a href="#应用2：" class="headerlink" title="应用2："></a>应用2：</h4><p>以<code>O(n)</code>的时间复杂度，对一位数组整体维护一个单调的性质（很显然该采用单调栈，这种题一般比较简单，也容易转换出来。）</p>
-<p>关键词：<strong>单调性质</strong>。此情况使用<strong>单调栈</strong></p>
-<h4 id="应用3："><a href="#应用3：" class="headerlink" title="应用3："></a>应用3：</h4><p>以<code>O(n)</code>的时间复杂度，求出一位数组滑动区间内的<strong>最大值/最小值</strong></p>
-<p>关键词：最大值，最小值。此情况使用<strong>单调队列</strong></p>
+<h4 id="在一维数组中对每一个数找到其左-右边第一个比自己大-小的元素，用单调栈"><a href="#在一维数组中对每一个数找到其左-右边第一个比自己大-小的元素，用单调栈" class="headerlink" title="在一维数组中对每一个数找到其左/右边第一个比自己大/小的元素，用单调栈"></a>在一维数组中对每一个数找到其左/右边第一个比自己大/小的元素，用单调栈</h4><p>这是单调栈最常用的性质之一。但是这种应用情景有的很多时候需要自己构造出来，题目是不会直接给出的。</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/132-pattern/">132模式</a></p>
+<p>  我想出的利用单调栈的算法，可以很直观地体现这个性质，即便这个办法不是最好的。</p>
+<p>  我们从前往后依次遍历每个数字，将其当做2。那么我们需要寻找作为3和1的数字。其中寻找作为3的数字，也就是寻找到<strong>当前作为2这个数字的左边，且比当前数字大的数字</strong>。我们再转换一下题目，可以知道寻找到<strong>当前作为2这个数字的左边，且第一个比当前数字大的数字</strong>，也同样使符合条件的，并且比第一种寻找条件更加严格。到这一步就显然可以用单调栈了。那么我们如何寻找作为数字1的数字呢。这个时候我们只需要维护一个长度为n的数组arr，arr[i]记录当前i位置之前的元素的最小值。说到这里，这个题的解法就呼之欲出了。虽然这种方法不是最好的，有空间复杂度更优秀的解法，但是我觉得这种解法是最直观也是最容易想到的。</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">find132pattern</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>    <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">if</span>(n &lt; <span class="hljs-number">3</span>)<br>      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    stack&lt;<span class="hljs-type">int</span>&gt; sta;<br>    sta.<span class="hljs-built_in">push</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-type">int</span> *preMinArr = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span>[n]();<br>    <span class="hljs-type">int</span> preMin = INT_MAX;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>      preMin = <span class="hljs-built_in">min</span>(preMin, nums[i]);<br>      preMinArr[i] = preMin;<br>      <span class="hljs-keyword">while</span>(!sta.<span class="hljs-built_in">empty</span>() &amp;&amp; nums[i] &gt;= nums[sta.<span class="hljs-built_in">top</span>()]) &#123;<br>        sta.<span class="hljs-built_in">pop</span>();<br>      &#125;<br>      <span class="hljs-keyword">if</span>(!sta.<span class="hljs-built_in">empty</span>() &amp;&amp; sta.<span class="hljs-built_in">top</span>() &amp;&amp; preMinArr[sta.<span class="hljs-built_in">top</span>()<span class="hljs-number">-1</span>] &lt; nums[i]) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>      &#125;<br>      sta.<span class="hljs-built_in">push</span>(i);<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
 
             </div>
             <hr>
