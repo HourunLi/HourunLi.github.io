@@ -16,18 +16,20 @@
   <meta name="author" content="Hourun Li">
   <meta name="keywords" content="moments, thoughts, tech">
   
-    <meta name="description" content="大一的时候就已经接触过x86与x64汇编的一些细节，也许是因为用的不多，看一次忘一次。这学期又开始学计算机系统实现，又接触到了汇编。打算趁这个机会好好整理一下，因为之后也还有可能还需要深入汇编。 另外，由于这篇关于x86汇编函数调用的博客主要是想利用尽可能精炼的语言描述重点，并记录下以防下次忘记，网上也有很多相关的博客，所以我懒得自己去生成汇编代码和截图了。图片代码图源侵删。 基本知识首先需要牢记">
+    <meta name="description" content="大一的时候就已经接触过x86与x64汇编的一些细节，也许是因为用得不多，看一次忘一次。这学期又开始学计算机系统实现，又接触到了汇编。打算趁这个机会好好整理一下，因为之后也还有可能还需要深入汇编。 另外，由于这篇关于x86汇编函数调用的博客主要是想利用尽可能精炼的语言描述重点，并记录下以防下次忘记，网上也有很多相关的博客，所以我懒得自己去生成汇编代码和截图了。图片代码图源侵删。 基本知识首先需要牢记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="x86汇编函数调用">
 <meta property="og:url" content="http://example.com/2022/03/09/x86%E6%B1%87%E7%BC%96%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/index.html">
 <meta property="og:site_name" content="Andy&#39;s Oasis">
-<meta property="og:description" content="大一的时候就已经接触过x86与x64汇编的一些细节，也许是因为用的不多，看一次忘一次。这学期又开始学计算机系统实现，又接触到了汇编。打算趁这个机会好好整理一下，因为之后也还有可能还需要深入汇编。 另外，由于这篇关于x86汇编函数调用的博客主要是想利用尽可能精炼的语言描述重点，并记录下以防下次忘记，网上也有很多相关的博客，所以我懒得自己去生成汇编代码和截图了。图片代码图源侵删。 基本知识首先需要牢记">
+<meta property="og:description" content="大一的时候就已经接触过x86与x64汇编的一些细节，也许是因为用得不多，看一次忘一次。这学期又开始学计算机系统实现，又接触到了汇编。打算趁这个机会好好整理一下，因为之后也还有可能还需要深入汇编。 另外，由于这篇关于x86汇编函数调用的博客主要是想利用尽可能精炼的语言描述重点，并记录下以防下次忘记，网上也有很多相关的博客，所以我懒得自己去生成汇编代码和截图了。图片代码图源侵删。 基本知识首先需要牢记">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/03/09/x86%E6%B1%87%E7%BC%96%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/stack.png">
 <meta property="article:published_time" content="2022-03-09T06:33:18.000Z">
-<meta property="article:modified_time" content="2022-03-09T11:54:25.301Z">
+<meta property="article:modified_time" content="2022-03-10T01:41:14.394Z">
 <meta property="article:author" content="Hourun Li">
 <meta property="article:tag" content="assemble">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/03/09/x86%E6%B1%87%E7%BC%96%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/stack.png">
   
   
   <title>x86汇编函数调用 - Andy&#39;s Oasis</title>
@@ -197,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      458 字
+      639 字
     </span>
   
 
@@ -206,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      6 分钟
     </span>
   
 
@@ -246,16 +248,30 @@
             <h1 style="display: none">x86汇编函数调用</h1>
             
             <div class="markdown-body">
-              <p>大一的时候就已经接触过x86与x64汇编的一些细节，也许是因为用的不多，看一次忘一次。这学期又开始学计算机系统实现，又接触到了汇编。打算趁这个机会好好整理一下，因为之后也还有可能还需要深入汇编。</p>
+              <p>大一的时候就已经接触过x86与x64汇编的一些细节，也许是因为用得不多，看一次忘一次。这学期又开始学计算机系统实现，又接触到了汇编。打算趁这个机会好好整理一下，因为之后也还有可能还需要深入汇编。</p>
 <p>另外，由于这篇关于x86汇编函数调用的博客主要是想利用尽可能精炼的语言描述重点，并记录下以防下次忘记，网上也有很多相关的博客，所以我懒得自己去生成汇编代码和截图了。图片代码图源侵删。</p>
 <h3 id="基本知识"><a href="#基本知识" class="headerlink" title="基本知识"></a>基本知识</h3><p>首先需要牢记下列几个知识：</p>
 <ul>
-<li>x86函数调用参数全部通过栈传递，而x64函数调用前6个参数用寄存器传递（寄存器使用顺序是：rdi、rsi、rdx、rcx、r8、r9，多余参数用栈传递）</li>
-<li>ebp是基址指针寄存器(extended base pointer)，为指向系统栈最上面一个栈帧的底部的指针。</li>
-<li>esp是栈指针寄存器(extended stack pointer)，为指向系统栈最上面一个栈帧的栈顶的指针。</li>
-<li>eip是cpu指令寄存器，为指向cpu即将执行的下一条汇编指令的指针。</li>
+<li><p>x86函数调用参数全部通过栈传递，而x64函数调用前6个参数用寄存器传递（寄存器使用顺序是：rdi、rsi、rdx、rcx、r8、r9，多余参数用栈传递）</p>
+</li>
+<li><p>ebp是基址指针寄存器(extended base pointer)，为指向系统栈最上面一个栈帧的底部的指针。</p>
+</li>
+<li><p>esp是栈指针寄存器(extended stack pointer)，为指向系统栈最上面一个栈帧的栈顶的指针。</p>
+</li>
+<li><p>eip是cpu指令寄存器，为指向cpu即将执行的下一条汇编指令的指针。</p>
+</li>
+<li><p>从物理上来说，CALL 指令将其返回地址压入堆栈（也就是调用完函数下一条即将执行的指令地址），再把被调用过程的地址复制到指令指针寄存器。</p>
+</li>
+<li><p>当过程准备返回时， RET 指令从堆栈把返回地址弹回到指令指针寄存器，然后按照EIP此时指示的指令地址继续执行程序。</p>
+</li>
+<li><p>leave指令相当于</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs assembly">movl %ebp %esp   <br>popl %ebp<br></code></pre></td></tr></table></figure></li>
 </ul>
-<p>参考：</p>
+<h3 id="栈的示意图"><a href="#栈的示意图" class="headerlink" title="栈的示意图"></a>栈的示意图</h3><ul>
+<li><p>栈从高地址方向向低地址方向生长</p>
+  <img src="/2022/03/09/x86%E6%B1%87%E7%BC%96%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8/stack.png" srcset="/img/loading.gif" lazyload class=""></li>
+</ul>
+<h3 id="函数调用分析"><a href="#函数调用分析" class="headerlink" title="函数调用分析"></a>函数调用分析</h3><p>参考：</p>
 <ul>
 <li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kafmws/article/details/103513824">x86函数调用过程与栈帧</a></p>
 </li>
