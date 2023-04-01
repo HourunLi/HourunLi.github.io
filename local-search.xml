@@ -8,22 +8,21 @@
     <link href="/2023/04/01/My-website/"/>
     <url>/2023/04/01/My-website/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>好久没有更新这个博客了。</p><p>其实有很多时候都屡屡想起在此更新博客，但是又因为种种原因不断放弃。因为我总怀疑我是否拥有一个知识&#x2F;信息输出者的特质。无论是做b站视频的输出还是生活vlog的记录我都未曾坚持下去，不仅因为做的过程的繁琐无比浪费时间精力，也因为我有一种知识输出“羞耻症”。如同发朋友圈一般，让别人看到我的所思所想是一件很不好意思的事情。</p><p>我再次回到这里的原因倒不是因为我克服了上述问题，而是我遇到了一些新的问题。首先是随着年纪的增长，我已经慢慢丧失随心所言的能力，无论说什么都希望必须别人看到的感受，这个别人可能是老师、老板，也可能是同学，甚至是伴侣。而当一个人的写作都无法面对最真实的自己，无法拥有私人写作，那么也就无法拥有灵魂的真实性。我自己的博客网站也许相对小众的社交平台会是一个好一点的选择，因为访问我网站的人起码都是愿意了解我的人，我也尽可能不去考虑他们看到的感受；其次，我本是一个喜欢感受与记录的人，但又羞于表达给外人所看，我愿意把这个地方视为我的小屋子，就像名字所言“Andy‘s Oasis”。朋友圈已经不再是表达的地方，而这个地方也许可以成为想了解我的人了解我的途径；最后，我越来越感受到知识输出的重要性。每个月都会看至少一本书，而大量的知识输入却无输出只会导致知识杂乱纠结混沌于心，而文字也许是我更擅长也是相对视频编辑成本更低的输出方式，我也能够通过这种方式记录生活、标本心情、保鲜情绪、刻画成长。</p><p>所以我再次回到了这个地方，我也希望我能够一直坚持下去。所有看到这里的伙伴，我想说：你在这里也许能看到一个与众不同的我，我也希望你能够从我的博客里收获更多的信息和感悟。</p><p>祝你万事胜意。</p>]]></content>
     
     
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="/2023/04/01/hello-world/"/>
-    <url>/2023/04/01/hello-world/</url>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <categories>
+      
+      <category>生活记录</category>
+      
+    </categories>
     
     
+    <tags>
+      
+      <tag>碎碎念</tag>
+      
+    </tags>
     
   </entry>
   
